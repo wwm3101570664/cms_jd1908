@@ -11,20 +11,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.briup.apps.cms.bean.User;
 import com.briup.apps.cms.bean.extend.UserExtend;
 import com.briup.apps.cms.service.IUserService;
+import com.briup.apps.cms.utils.JwtTokenUtil;
 import com.briup.apps.cms.utils.Message;
 import com.briup.apps.cms.utils.MessageUtil;
 import com.briup.apps.cms.vm.UserVM;
 
 import io.swagger.annotations.ApiOperation;
 
-/**
- * @program: cms_jd1911
- * @description: 用户控制器类
- * @author: charles
- * @create: 2019-11-15 14:41
- **/
+
 @Validated
 @RestController
 @RequestMapping("/user")
@@ -36,11 +33,14 @@ public class UserController {
     @PostMapping("login")
     public Message login(@RequestBody UserVM userVM){
         // 1. 认证用户的用户名和密码
-    	
+    	User user = baseUserService.login(userVM);
         // 2. 如果登录成功产生token,将token缓存起来，返回
+    	String token = JwtTokenUtil.createJWT(user.getId(), user.getUsername());
+    	System.out.println(token);
         // 3. 如果登录失败
         Map<String,String> map = new HashMap<>();
-        map.put("token","admin-token");
+//        map.put("token","admin-token");
+        map.put("token", token);
         return MessageUtil.success(map);
     }
 
@@ -48,8 +48,10 @@ public class UserController {
     @GetMapping("info")
     public Message info(String token){
         // 1. 通过token获取用户信息  {id,use,gender,roles:[]}
-        UserExtend baseUserExtend = baseUserService.findById(1l);
-        return MessageUtil.success(baseUserExtend);
+//        UserExtend baseUserExtend = baseUserService.findById(1l);
+    	long id = Long.parseLong(JwtTokenUtil.getUserId(token,JwtTokenUtil.base64Secret));
+    	UserExtend userExtend = baseUserService.findById(id);
+        return MessageUtil.success(userExtend);
     }
 
     @PostMapping("logout")

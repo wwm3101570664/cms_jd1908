@@ -62,7 +62,7 @@
     <table tableName="cms_comment" domainObjectName="Comment" ></table>
     <table tableName="base_privilege" domainObjectName="Privilege" ></table>
     <table tableName="base_role" domainObjectName="Role" ></table>
-    <table tableName="basde_role_privilege" domainObjectName="Role_Privilege" ></table>
+    <table tableName="base_role_privilege" domainObjectName="Role_Privilege" ></table>
     <table tableName="base_user" domainObjectName="User" ></table>
     <table tableName="base_user_role" domainObjectName="User_Role" ></table>
 

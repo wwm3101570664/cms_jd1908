@@ -5,8 +5,11 @@ import java.util.List;
 import com.briup.apps.cms.bean.User;
 import com.briup.apps.cms.bean.extend.UserExtend;
 import com.briup.apps.cms.config.CustomerException;
+import com.briup.apps.cms.vm.UserVM;
 
 public interface IUserService {
+	
+	 User login(UserVM userVM) throws CustomerException;
 	 /**
      * @Description: 通过id查询
     */
@@ -41,4 +44,6 @@ public interface IUserService {
      * @Description: 设置角色
     */ 
     void setRoles(long id, List<Long> roles);
+    
+   
 }

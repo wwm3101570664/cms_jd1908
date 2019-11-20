@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.briup.apps.cms.bean.Role;
@@ -30,6 +31,7 @@ public class RoleController {
 
     @Autowired
     private IRoleService baseRoleService;
+    
 
     @ApiOperation(value = "查询所有")
     @GetMapping(value = "findAll")
@@ -58,6 +60,14 @@ public class RoleController {
     public Message saveOrUpdate(Role role){
         baseRoleService.saveOrUpdate(role);
         return MessageUtil.success("更新成功");
+    }
+    
+    @ApiOperation(value ="授权")
+    @PostMapping(value = "authorization")
+    public Message authorization(@RequestParam(value="id") long id, @RequestParam(value="privileges")List<Long> privileges){
+    	System.out.println(1111);
+       baseRoleService.authorization(id, privileges);
+       return MessageUtil.success("授权成功");
     }
 
 }

@@ -19,6 +19,7 @@ import com.briup.apps.cms.dao.UserMapper;
 import com.briup.apps.cms.dao.User_RoleMapper;
 import com.briup.apps.cms.dao.extend.UserExtendMapper;
 import com.briup.apps.cms.service.IUserService;
+import com.briup.apps.cms.vm.UserVM;
 
 
 
@@ -118,6 +119,27 @@ public class UserServiceImpl implements IUserService{
 
 
     }
+
+	@Override
+	public User login(UserVM userVM) throws CustomerException {
+		
+		UserExample example = new UserExample();
+		example.createCriteria().andUsernameEqualTo(userVM.getUsername());
+		List<User> list = UserMapper.selectByExample(example );
+		if(list.size()<=0) {
+			throw new CustomerException("该用户不存在");
+		}
+		User user = list.get(0);
+		if(!(user.getPassword()).equals(userVM.getPassword())) {
+			throw new CustomerException("用户密码错误");
+		}
+		
+		return user;
+	}
+
+
+    
+    
 
 	
 	

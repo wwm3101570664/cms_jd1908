@@ -24,4 +24,6 @@ public interface IPrivilegeService {
     void saveOrUpdate(Privilege privilege) throws CustomerException;
 
     List<PrivilegeTree> findPrivilegeTree();
+    
+    List<Privilege> findByUserId(long id);
 }

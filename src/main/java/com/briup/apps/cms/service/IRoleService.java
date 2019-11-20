@@ -26,4 +26,7 @@ public interface IRoleService {
      * @Description: 通过id删除角色信息 
     */ 
     void deleteById(long id) throws CustomerException;
+    
+    //授权
+    void authorization(long roleId,List<Long> privilegeIds);
 }
